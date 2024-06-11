@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="">
+        <input type="text" name="name" id="name">
+        <input type="email" name="email" id="email">
+        <input type="password" name="password" id="password">
+        <button type="submit" role="button">Create Account</button>
+    </form>
+</body>
+
+<script>
+    const signupForm = document.forms[0];
+
+    signupForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const signupData = new FormData(signupForm);
+
+        const jsonData = {};
+    signupData.forEach((value, key) => {
+        jsonData[key] = value;
+    });
+
+        fetch('apis/create.php', {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(err => console.error(err.message))
+
+    })
+</script>
+
+</html>
